@@ -18,14 +18,14 @@ public class Serveur {
             BaseXServer bs =null;
        try
        {
-           bs = new BaseXServer();
+            bs = new BaseXServer();
            bs.run();
             
        }
        catch(IOException ie)
        {
            System.out.println(ie.getMessage());
-          
+           
        }
     }
 }

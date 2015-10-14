@@ -8,12 +8,21 @@ package com.team.xquery_java;
 import java.io.IOException;
 import org.basex.BaseXServer;
 
-
 /**
  *
  * @author adrien
  */
 public class Main {
 
-   
+    public static void main(String[] args) {
+        BaseXServer bs = null;
+        try {
+            bs = new BaseXServer();
+            bs.run();
+
+        } catch (IOException ie) {
+            System.out.println(ie.getMessage());
+
+        }
+    }
 }
