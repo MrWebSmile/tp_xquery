@@ -15,15 +15,17 @@ import org.basex.BaseXServer;
 public class Serveur {
     
         public static void main(String[] args) {
+            BaseXServer bs =null;
        try
        {
-           BaseXServer bs = new BaseXServer();
+           bs = new BaseXServer();
            bs.run();
             
        }
        catch(IOException ie)
        {
            System.out.println(ie.getMessage());
+          
        }
     }
 }
