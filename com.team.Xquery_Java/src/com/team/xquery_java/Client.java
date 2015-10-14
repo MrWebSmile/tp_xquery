@@ -15,13 +15,11 @@ import org.basex.BaseXClient;
 public class Client {
 
     public static void main(String[] args) {
-        
-        try
-        {
+
+        try {
             BaseXClient bc = new BaseXClient();
-        }
-        catch(IOException ie)
-        {
+        } 
+        catch (IOException ie) {
             
         }
     }

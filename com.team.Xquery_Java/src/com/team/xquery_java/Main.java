@@ -15,18 +15,5 @@ import org.basex.BaseXServer;
  */
 public class Main {
 
-    
-    public static void main(String[] args) {
-       try
-       {
-           BaseXServer bs = new BaseXServer();
-           bs.run();
-            
-       }
-       catch(IOException ie)
-       {
-           System.out.println(ie.getMessage());
-       }
-    }
-
+   
 }
