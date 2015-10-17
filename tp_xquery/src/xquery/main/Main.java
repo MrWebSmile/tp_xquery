@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package xquery.main;
-import java.awt.Robot;
+import org.basex.core.Context;
 import xquery.config.Config;
 import static xquery.config.Config.CONF_PTH;
+
+
 /**
  *
  * @author adrien
@@ -19,7 +21,12 @@ public class Main {
     public static void main(String[] args) {
         
         Config conf = new Config(CONF_PTH);
- 
+        String titre = "Lost Girl";
+        Context ct; 
+        ct = new Context();
+        String query = "for $title in doc('kat.xml')//title "
+                + "where contains($title,'"+titre+"')"
+                + "return <p>{$title}</p>";
     }
     
 }
