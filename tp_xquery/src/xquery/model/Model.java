@@ -18,6 +18,13 @@ public class Model implements IModel {
 
     private Context ctx;
     private String dbName;
+    private String path;
+
+    public Model(String db, String pth) {
+        this.ctx = new Context();
+        this.dbName = db;
+        this.path = pth;
+    }
 
     @Override
     public void deleteDb(String db) throws SystemException {
@@ -44,12 +51,23 @@ public class Model implements IModel {
 
     @Override
     public String getDatabases() throws SystemException {
-        return null;
+        try {
+            return new List().execute(ctx);
+        } catch (BaseXException ex) {
+            throw new SystemException("Error on getting List");
+        }
     }
 
     @Override
     public String getElementsInCollection(String collectionName) throws SystemException {
-        return null;
+        try {
+            return new XQuery(
+                    "for $doc in collection('" + collectionName + "')"
+                    + "return <doc path='{ base-uri($doc) }'/>"
+            ).execute(ctx);
+        } catch (BaseXException ex) {
+            throw new SystemException("Query Exception");
+        }
     }
 
     @Override
@@ -74,7 +92,13 @@ public class Model implements IModel {
 
     @Override
     public void addXMLToDb(String path) throws SystemException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            /* add all the xml files that are in the path*/
+            new Add("", path).execute(ctx);
+            new Optimize().execute(ctx);
+        } catch (BaseXException ex) {
+            throw new SystemException("Error on adding files");
+        }
     }
 
     @Override

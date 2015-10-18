@@ -22,8 +22,6 @@ public class Main {
         
         Config conf = new Config(CONF_PTH);
         String titre = "Lost Girl";
-        Context ct; 
-        ct = new Context();
         String query = "for $title in doc('kat.xml')//title "
                 + "where contains($title,'"+titre+"')"
                 + "return <p>{$title}</p>";
