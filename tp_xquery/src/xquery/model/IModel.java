@@ -32,5 +32,8 @@ public interface IModel {
     void refreshDb() throws SystemException;
 
     String useDefaultDb() throws SystemException;
+    
+    void createXml(String title,String query,String path) throws SystemException;
+    void closeDB() throws SystemException;
 
 }

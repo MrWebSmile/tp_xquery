@@ -6,6 +6,9 @@
 package xquery.model;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import org.basex.core.BaseXException;
 import org.basex.core.Context;
 import org.basex.core.cmd.*;
@@ -134,6 +137,30 @@ public class Model implements IModel {
             }
 
         }
+    }
+
+    @Override
+    public void createXml(String title, String query,String path) throws SystemException {
+        
+        try
+        {
+            File file = new File(path+"/"+title+".xml");
+            PrintWriter write;
+            write = new PrintWriter(new FileWriter(file));
+            String prolog ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+            write.println(prolog);
+            write.close();
+        }
+        catch(IOException eo)
+        {
+            throw new SystemException("Error on creating files");
+        }
+        
+    }
+
+    @Override
+    public void closeDB() throws SystemException {
+        
     }
 
 }
