@@ -19,7 +19,8 @@ public class Config {
 
     private Properties pr;
     public final static String CONF_PTH = "src/xquery/ressources/config.properties";
-
+    public final static String DATABASE = "dbname";
+    public final static String DB_PATH = "path";
     public Config(String path) {
         try {
             pr = new Properties();
@@ -30,5 +31,8 @@ public class Config {
         } catch (IOException ie) {
             System.out.println(ie.getMessage());
         }
+    }
+    public String getProp(String prop) {
+        return pr.getProperty(prop);
     }
 }

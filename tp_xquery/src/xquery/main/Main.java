@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 package xquery.main;
-import org.basex.core.Context;
 import xquery.config.Config;
-import static xquery.config.Config.CONF_PTH;
+import xquery.exceptions.SystemException;
+import xquery.model.Model;
+
 
 
 /**
@@ -20,11 +21,25 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        Config conf = new Config(CONF_PTH);
+        Config conf = new Config(Config.CONF_PTH);
+        Model m = new Model(conf.getProp(Config.DATABASE),conf.getProp(Config.DB_PATH));
+        String xml ="kat.xml";
         String titre = "Lost Girl";
-        String query = "for $title in doc('kat.xml')//title "
+        String query = "for $title in //title/text() "
                 + "where contains($title,'"+titre+"')"
                 + "return <p>{$title}</p>";
+        try
+        {
+            String db =m.createDatabase();
+            m.openDb(db);
+            m.addXMLToDb(conf.getProp(Config.DB_PATH)+"/"+xml);
+            System.out.println(m.getDatabases());
+            System.out.println(m.executeQuery(query));
+        }
+        catch(SystemException se)
+        {
+            System.out.println(se.getMessage());
+        }
     }
     
 }

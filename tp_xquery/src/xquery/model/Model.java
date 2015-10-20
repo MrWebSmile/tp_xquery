@@ -5,6 +5,7 @@
  */
 package xquery.model;
 
+import java.io.File;
 import org.basex.core.BaseXException;
 import org.basex.core.Context;
 import org.basex.core.cmd.*;
@@ -25,7 +26,7 @@ public class Model implements IModel {
         this.dbName = db;
         this.path = pth;
     }
-
+    
     @Override
     public void deleteDb(String db) throws SystemException {
 
@@ -38,7 +39,7 @@ public class Model implements IModel {
             System.out.println(be.getMessage());
         }
     }
-
+    
     @Override
     public String executeQuery(String query) throws SystemException {
 
@@ -82,12 +83,21 @@ public class Model implements IModel {
 
     @Override
     public String createDatabase() throws SystemException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            new CreateDB(dbName).execute(ctx);
+            return dbName;
+        } catch (BaseXException ex) {
+            throw new SystemException("Error on opening Database");
+        }
     }
 
     @Override
     public void removeXML(String file) throws SystemException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            new Delete(file).execute(ctx);
+        } catch (BaseXException ex) {
+            throw new SystemException("Error on removing a file");
+        }
     }
 
     @Override
@@ -95,7 +105,7 @@ public class Model implements IModel {
         try {
             /* add all the xml files that are in the path*/
             new Add("", path).execute(ctx);
-            new Optimize().execute(ctx);
+            //new Optimize().execute(ctx);
         } catch (BaseXException ex) {
             throw new SystemException("Error on adding files");
         }
@@ -103,12 +113,27 @@ public class Model implements IModel {
 
     @Override
     public void refreshDb() throws SystemException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        addXMLToDb(path);
+        removeFiles(path);
     }
 
     @Override
     public String useDefaultDb() throws SystemException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void removeFiles(String path) {
+        File f = new File(path);
+        if (f.exists()) {
+            File[] files = f.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    removeFiles(f + "\\" + file);
+                }
+                file.delete();
+            }
+
+        }
     }
 
 }
