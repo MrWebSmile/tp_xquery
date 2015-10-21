@@ -23,7 +23,7 @@ public class Main {
         Config conf = new Config(Config.CONF_PTH);
         Model m = new Model(conf.getProp(Config.DATABASE), conf.getProp(Config.DB_PATH));
         String xml = "kat.xml";
-        String query = "for $title in /series/nom/text()\n"
+        String query = "for $title in /series/serie/nom/text()\n"
                 + "for $title2 in //title\n"
                 + "where contains($title2,$title)\n"
                 + "return $title";
