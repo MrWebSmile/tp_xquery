@@ -29,7 +29,7 @@ public class Model implements IModel {
         this.dbName = db;
         this.path = pth;
     }
-    
+
     @Override
     public void deleteDb(String db) throws SystemException {
 
@@ -42,7 +42,7 @@ public class Model implements IModel {
             System.out.println(be.getMessage());
         }
     }
-    
+
     @Override
     public String executeQuery(String query) throws SystemException {
 
@@ -140,27 +140,33 @@ public class Model implements IModel {
     }
 
     @Override
-    public void createXml(String title, String query,String path) throws SystemException {
-        
-        try
-        {
-            File file = new File(path+"/"+title+".xml");
+    public void createXml(String title, String query, String path) throws SystemException {
+
+        try {
+            File file = new File(path + "/" + title + ".xml");
             PrintWriter write;
             write = new PrintWriter(new FileWriter(file));
-            String prolog ="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+            String prolog = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
             write.println(prolog);
+            write.println("<serie>");
+            write.println("<nom>" + title + "</nom>");
+            write.println("<episodes>");
+            write.println("<episode>");
+            write.println("<nom></nom>");
+            write.println("<lien></lien>");
+            write.println("<episode>");
+            write.println("<episodes>");
+            write.println("<serie>");
             write.close();
-        }
-        catch(IOException eo)
-        {
+        } catch (IOException eo) {
             throw new SystemException("Error on creating files");
         }
-        
+
     }
 
     @Override
     public void closeDB() throws SystemException {
-        
+
     }
 
 }
